@@ -17,12 +17,6 @@ export default class NewMessage extends Component {
       body: '',
     }
   }
-  shouldComponentUpdate(_, nextState){
-    if(this.state.body !== nextState.body){
-      return false;
-    }
-    return true;
-  }
   componentDidMount() {
     firebaseAuth.onAuthStateChanged((firebaseUser) => {
       if (!firebaseUser) return;
@@ -47,7 +41,7 @@ export default class NewMessage extends Component {
       <Container>
         <View style={{ flex: 1, padding: 20, justifyContent: 'flex-start' }}>
           <Item>
-            <Input value={body} placeholder="ごはんですよ！" placeholderTextColor="#ccc" onChangeText={this.onChangeBody} />
+            <Input placeholder="ごはんですよ！" placeholderTextColor="#ccc" onChangeText={this.onChangeBody} />
           </Item>
           <Button primary block style={{ marginTop: 20 }} onPress={this.save} disabled={!user || !body}>
             <Text>登録</Text>
