@@ -18,10 +18,13 @@ export default class App extends React.Component {
     };
   }
   registerPushNotificationService() {
-    Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
+    Permissions.getAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
+      return status !== 'granted' ? Permissions.askAsync(Permissions.NOTIFICATIONS) : { status };
+    }).then(({ status }) => {
       if (status !== 'granted') return;
       return Notifications.getExpoPushTokenAsync();
     }).then((expoPushToken) => {
+      if(!expoPushToken) return;
       this.setState({ expoPushToken });
     });
   }
